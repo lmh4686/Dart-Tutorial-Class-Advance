@@ -1,29 +1,41 @@
-void main(List<String> arguments) {}
-
-//generic parameter T can also be used in function.
-void myMethod<T>(T arg) {}
-
-//Using generic parameter T instead of dynamic for better practice
-abstract class DataReader<T> {
-  T readData();
+void main(List<String> arguments) {
+  ChatBot bot = ChatBot('2');
+  bot.sendElevatedMessage('Using method defined in the mixin');
+  final admin = Admin(firstName: 'firstName', lastName: 'lastName', specialAdminField: 2);
+  admin.sendElevatedMessage('Using method defined in the mixin');
 }
 
-//implements must override all properties, methods, fields defined in the super class
-//Used to create an interface
-class IntegerDataReader implements DataReader<int> {
-  @override
-  int readData() {
-    print('performing logic');
-    return 12;
+class User {
+  final String firstName;
+  final String lastName;
+
+  User(this.firstName, this.lastName);
+}
+
+//mixin doesn't perform any inheritance
+//Only add methods into the classes
+mixin ElevatedClient {
+  void sendElevatedMessage(String text) {
+    print('Sending a message with an elevated importance: $text');
   }
 }
 
-class StringDataReader implements DataReader<String> {
-  @override
-  String readData() {
-    print('performing logic');
-    return 'hi';
-  }
+class Admin extends User with ElevatedClient {
+  final double specialAdminField;
+
+  Admin({
+    required String firstName,
+    required String lastName,
+    required this.specialAdminField,
+  }) : super(firstName, lastName);
 }
 
+class ChatBot with ElevatedClient {
+  final String id;
 
+  ChatBot(this.id);
+
+  void sendElevatedMessage(String text) {
+    print('Sending a message with an elevated importance: $text');
+  }
+}
