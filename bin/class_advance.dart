@@ -1,15 +1,13 @@
+//Each file is considered as a package in dart
+//Generally the private class is not accessible from another file
+//But using part here and part of in new.dart, They're considered as a same package
+part 'new.dart';
+
 void main(List<String> arguments) {
-  final x = 'hello'.duplicate();
-  print(x);
-  print(x.duplicated);
+
 }
 
-extension StringDuplication on String {
-  //Add method to String class
-  String duplicate() {
-    return this + this;
-  }
-
-  //Add property to String class
-  String get duplicated => this + this;
+class _PackagePrivateClass {
+  final String _packagePrivateField;
+  _PackagePrivateClass._(this._packagePrivateField);
 }
