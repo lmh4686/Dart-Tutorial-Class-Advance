@@ -2,26 +2,24 @@ import 'package:class_advance/class_advance.dart' as class_advance;
 import 'package:meta/meta.dart';
 
 void main(List<String> arguments) {
-  final user = User.admin(true);
+  final admin = Admin(
+    specialAdminField: 11,
+    firstName: 'firstName',
+    lastName: 'lastName',
+  );
+  //Return error because of the abstract keyword
+  // final user = User('a', 'b');
+
+  //But this works
+  admin as User;
 }
 
-class User {
+//abstract doesn't allow initiate the class directly
+abstract class User {
   final String _firstName;
   final String _lastName;
 
   User(this._firstName, this._lastName);
-
-  factory User.admin(bool admin) {
-    if (admin) {
-      return Admin(
-        specialAdminField: 12,
-        firstName: 'a',
-        lastName: 'b',
-      );
-    } else {
-      return User('c', 'd');
-    }
-  }
 
   String get fullName => '$_firstName, $_lastName';
 
@@ -29,6 +27,12 @@ class User {
   void signOut() {
     print('Signing out');
   }
+
+  // Fine for User class (abstract only) but get error for Admin class(inherited)
+  // To remove error, need override notation in Admin class
+  void myMethod();
+  //Same for property
+  int get myProperty;
 }
 
 class Admin extends User {
@@ -48,4 +52,13 @@ class Admin extends User {
     print('Admin specific sign out');
     super.signOut();
   }
+
+  @override
+  void myMethod() {
+    // TODO: implement myMethod
+  }
+  
+  @override
+  // TODO: implement myProperty
+  int get myProperty => throw UnimplementedError();
 }
