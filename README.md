@@ -2,5 +2,7 @@
 
 - Factory
 - Meta Library(@mustCallSuper)
-- Abstract
-- Override according to abstract super class
+- abstract
+- implements(Most case used with abstract super class)
+- Override according to super class
+- Generic parameter 'T'

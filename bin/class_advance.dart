@@ -1,64 +1,29 @@
-import 'package:class_advance/class_advance.dart' as class_advance;
-import 'package:meta/meta.dart';
+void main(List<String> arguments) {}
 
-void main(List<String> arguments) {
-  final admin = Admin(
-    specialAdminField: 11,
-    firstName: 'firstName',
-    lastName: 'lastName',
-  );
-  //Return error because of the abstract keyword
-  // final user = User('a', 'b');
+//generic parameter T can also be used in function.
+void myMethod<T>(T arg) {}
 
-  //But this works
-  admin as User;
+//Using generic parameter T instead of dynamic for better practice
+abstract class DataReader<T> {
+  T readData();
 }
 
-//abstract doesn't allow initiate the class directly
-abstract class User {
-  final String _firstName;
-  final String _lastName;
-
-  User(this._firstName, this._lastName);
-
-  String get fullName => '$_firstName, $_lastName';
-
-  @mustCallSuper
-  void signOut() {
-    print('Signing out');
+//implements must override all properties, methods, fields defined in the super class
+//Used to create an interface
+class IntegerDataReader implements DataReader<int> {
+  @override
+  int readData() {
+    print('performing logic');
+    return 12;
   }
-
-  // Fine for User class (abstract only) but get error for Admin class(inherited)
-  // To remove error, need override notation in Admin class
-  void myMethod();
-  //Same for property
-  int get myProperty;
 }
 
-class Admin extends User {
-  final double specialAdminField;
-
-  Admin({
-    required this.specialAdminField,
-    required String firstName,
-    required String lastName,
-  }) : super(firstName, lastName);
-
+class StringDataReader implements DataReader<String> {
   @override
-  String get fullName => 'Admin: ${super.fullName}';
-
-  @override
-  void signOut() {
-    print('Admin specific sign out');
-    super.signOut();
+  String readData() {
+    print('performing logic');
+    return 'hi';
   }
-
-  @override
-  void myMethod() {
-    // TODO: implement myMethod
-  }
-  
-  @override
-  // TODO: implement myProperty
-  int get myProperty => throw UnimplementedError();
 }
+
+
