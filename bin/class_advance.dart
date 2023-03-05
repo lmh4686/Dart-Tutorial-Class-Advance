@@ -7,20 +7,51 @@ part 'class_advance.freezed.dart';
 
 void main(List<String> arguments) {
   //After successfully generating the part file
-  final person = Person(age: 15, name: "John Doe");
-  final person2 = person.copyWith(age: 12, name: 'Jihyuk Lee');
-  print(person2.toString());
-  print(person == person2);
+  const resultSuccess = Result.success(100);
+  print(
+    resultSuccess.when(
+      loading: () {
+        return 'Loading....';
+      },
+      success: (value) {
+        return 'Yes! Data gotten successfully: $value';
+      },
+      failure: (msg) {
+        return 'No! error occured: $msg';
+      },
+    ),
+  );
+
+  print(
+    resultSuccess.maybeWhen(
+      //If it's not failure, it runs orElse statement.
+      orElse: () => 'orElse',
+      failure: (msg) {
+        return 'No! error occured: $msg';
+      },
+    ),
+  );
+
+  print(
+    resultSuccess.map(
+      loading: (loadingCase) {
+        return 'Loading....';
+      },
+      success: (successCase) {
+        return 'Yes! Data gotten successfully: ${successCase.value}';
+      },
+      failure: (failureCase) {
+        return 'No! error occurred: ${failureCase.errMsg}';
+      },
+    ),
+  );
 }
 
-// Add '_$' sign, @freezed to generate a class by using freezed.
-// The extension keyword 'fdataclass' can be used to generate this code and add 'const Person._();' and named constructor parameters
+//Use 'funion' keyword for auto-generated
 @freezed
-class Person with _$Person {
-  const Person._();
-
-  const factory Person({
-    required String name,
-    required int age,
-  }) = _Person;
+class Result with _$Result {
+  const Result._();
+  const factory Result.loading() = _Loading;
+  const factory Result.success(int value) = _Success;
+  const factory Result.failure(String errMsg) = _Failure;
 }
