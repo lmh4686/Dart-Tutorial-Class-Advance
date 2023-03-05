@@ -51,9 +51,9 @@ class Person {
       other.age == age;
   }
 
-  //Generate a unique hash code based on its fields
+  //Generate a unique hash code based on its fields (name, age)
   //Two objects that are equal have the same hash code but the reverse is not always true since hash codes are not unique
-  //combine two operators using XOR operator ^
+  //The XOR operator (^) is used to combine the two hash codes 
   @override
   int get hashCode => name.hashCode ^ age.hashCode;
 }
