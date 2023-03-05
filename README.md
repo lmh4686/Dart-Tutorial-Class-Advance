@@ -11,3 +11,4 @@
 - Accessing private class from another file using 'part'
 - Command + . to generate class structures and methods
 - Immutable update, equality check, hash code
+- freezed & freezed_annotation & build_runner libraries to auto generate the method & keep the class simple in the main file by hiding its methods into other file.
